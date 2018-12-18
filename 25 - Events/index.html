@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Understanding JavaScript's Capture</title>
+  </head>
+  <body class="bod">
+    <div class="one">
+      <div class="two"><div class="three"></div></div>
+    </div>
+
+    <style>
+      html {
+        box-sizing: border-box;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      div {
+        width: 100%;
+        padding: 100px;
+      }
+
+      .one {
+        background: thistle;
+      }
+
+      .two {
+        background: mistyrose;
+      }
+
+      .three {
+        background: coral;
+      }
+    </style>
+
+    <button></button>
+    <script>
+      const divs = document.querySelectorAll('div');
+
+      function logText(e) {
+        // e.stopPropagation();
+        console.log(this.classList.value);
+      }
+
+      divs.forEach(div => div.addEventListener('click', logText, { capture: false, once: true }));
+
+      //here if you click on the .three coral div it will log all three, two, one
+      //what's happening is when we click 4rd inner div we also click on 2nd and 1st becuase 3rd is child of them
+      //event will be triggered all the way up to the body element
+      //this is the concept of event bubbling
+
+      //event capturing is browser figuring out where you clicked and making a tree all the way down to the target element but not firing the event, then it's event bubbling which goes bottom to top in the tree all the way firing the event
+
+      //we can pass third argument in eventListener which is options obj, here we can pass capture: true
+      //with capture:true we are firing the event while working down the tree, by default it's false
+
+      //event stopPropagation() stops the event bubbling and only fires on the target element
+
+      //with stopPropagation() and capture true even if we click on inner child we are only going to fire event on the parent and it stops there
+
+      //if once option is set to true, the element will listen for click and then unbinds itself, means it will automatically removes the eventListener from the element..
+      //it's a good idea to use this event unbinding in store checkout so the users do not keep clicking the button
+    </script>
+  </body>
+</html>
