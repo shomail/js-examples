@@ -46,3 +46,28 @@ console.log(myCar);
 //then constructor prop refers to global object type
 //Car.prototype = {}
 //console.log(Car.prototype.constructor) // Object
+
+//this keyword inside prototype
+
+function Foo(name) {
+  this.name = name;
+}
+
+Foo.prototype.myName = function() {
+  return this.name;
+};
+
+function Bar(name) {
+  //   Foo(name);
+  Foo.call(this, name);
+}
+
+Bar.prototype = Object.create(Foo.prototype);
+const a = new Bar('shomail');
+
+//here Bar function do not have myName function in its prototype chain and we have to link them
+
+// console.log(a.myName());
+
+console.log(a.myName());
+//now we have name printed on screen
