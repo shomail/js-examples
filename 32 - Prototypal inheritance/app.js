@@ -71,3 +71,49 @@ const a = new Bar('shomail');
 
 console.log(a.myName());
 //now we have name printed on screen
+
+const loopObj = {
+  firstName: 'shomail',
+  lstName: 'tahir'
+};
+
+const loopProtoObj = {
+  hair: 'black'
+};
+
+Object.setPrototypeOf(loopObj, loopProtoObj);
+let n = 0;
+
+//for in loop iterates over enumerable props of obj
+//it also steps thorugh proto chain obj by obj
+//foo loop only goes through distinct props, so if loopObj has hair prop it will not go over it in prototype
+for (let property in loopObj) {
+  if (loopObj.hasOwnProperty(property)) {
+    n++;
+  }
+}
+
+console.log(n);
+
+//object assign to create copy obj
+
+const parent = {
+  hair: 'black',
+  heightInInches() {
+    return this.height * 12;
+  }
+};
+
+const child = Object.create(parent);
+
+child.height = 5.1;
+console.log(child.heightInInches());
+
+//here if you edit parent obj which is set as prototype then it will effect child obj
+//to help this situation we can use Object.assign
+
+const copyChild = Object.assign({ height: 6 }, parent);
+
+parent.heightInInches = () => true;
+
+console.log(copyChild.heightInInches());
