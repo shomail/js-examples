@@ -160,3 +160,38 @@ class Food {
 //static props can also be called from within the class
 console.log(Food.isHealthy());
 console.log(Food.canBeEaten());
+
+//determing the constructor of an object with instanceof
+//instanceof operator tests wheater the prototype of constructor appears anywhere in the objects proto chain
+function Bear(type) {
+  this.type = type;
+}
+
+function Leapord(type) {
+  this.type = type;
+}
+
+const snowBear = new Leapord('snow leapord');
+
+Object.setPrototypeOf(Leapord.prototype, Bear.prototype);
+
+console.log(snowBear instanceof Bear);
+
+//factory functions for object composition
+
+const createPlayer = player => ({
+  ...player,
+  team: 'abc warriors'
+});
+
+const player1 = createPlayer({
+  hair: 'brown',
+  height: '6 feet'
+});
+
+const player2 = createPlayer({
+  hair: 'blonde',
+  height: '5.10 feet'
+});
+
+console.log(player1.team);
