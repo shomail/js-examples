@@ -117,3 +117,46 @@ const copyChild = Object.assign({ height: 6 }, parent);
 parent.heightInInches = () => true;
 
 console.log(copyChild.heightInInches());
+
+//prototype delegation with classes
+//its just constructor function under the hood
+//classes still uses prototype chain
+class Vehicle {
+  isLegal() {
+    return true;
+  }
+}
+
+class CarClass extends Vehicle {
+  canBeUsed() {
+    return this.isLegal();
+  }
+}
+
+console.log(typeof Vehicle);
+console.log(Vehicle.prototype, typeof Vehicle.prototype);
+
+const carFromClass = new CarClass();
+console.log(carFromClass.canBeUsed());
+console.log(Object.getPrototypeOf(carFromClass));
+//here we get true from Vehicle because this keyword refers to newly created object by new keyword and it's prototype linked to Vehicle with extends keyword.
+//unlike classical languages properties and methods are not directly copied, instead they live on prototype object and get refrenced from there.
+
+//STATIC METHODS on classes
+class Food {
+  static isHealthy() {
+    return true;
+  }
+
+  static canBeEaten() {
+    return Food.isHealthy();
+    //we can also use this, which will refer to Food class
+  }
+}
+
+//here if we try to access isHealthy method on class we get error because its on prototype object and we need to first make instance of the class
+//ERROR Food.isHealthy()
+//but with static keyword we can access it directly on the class
+//static props can also be called from within the class
+console.log(Food.isHealthy());
+console.log(Food.canBeEaten());
