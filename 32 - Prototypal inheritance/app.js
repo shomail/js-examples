@@ -178,7 +178,7 @@ Object.setPrototypeOf(Leapord.prototype, Bear.prototype);
 console.log(snowBear instanceof Bear);
 
 //factory functions for object composition
-
+//any function which is not called with new keyword and returns a new object is factory func.
 const createPlayer = player => ({
   ...player,
   team: 'abc warriors'
@@ -195,3 +195,33 @@ const player2 = createPlayer({
 });
 
 console.log(player1.team);
+
+//polymorphism with prototype linked objects
+//polymorhism or shadowing is when an inherited property is redefined
+const fifo = {
+  name: 'shogun'
+};
+
+const lifo = {
+  lastName: 'tintin'
+};
+
+Object.setPrototypeOf(lifo, fifo);
+
+lifo.name = 'rio yamazaki';
+
+console.log(lifo.name);
+
+//JS constructor inheritance with objects oloo pattern (objects linking to other objects)
+//instead of using new keyword, we use simple object literals
+const house = {
+  set houseColor(color) {
+    this.color = color;
+  }
+};
+
+const myHouse = Object.create(house);
+
+console.log((myHouse.houseColor = 'blue'));
+
+console.log(myHouse);
